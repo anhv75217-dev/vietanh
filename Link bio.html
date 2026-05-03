@@ -1,1 +1,467 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>VIP | Việt Anh • NEON EMPIRE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            background: #05050F;
+            font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+            color: #fff;
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding: 1.5rem;
+        }
+
+        /* Import font đẹp */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+        /* === VIỀN CHẠY NHẤP NHÁY CAO CẤP === */
+        .vip-border {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .vip-border .edge {
+            position: absolute;
+            background: linear-gradient(90deg, #00c3ff, #ff00d4, #00e0ff, #ff00d4);
+            background-size: 300% 100%;
+            will-change: background-position;
+            box-shadow: 0 0 8px rgba(0, 195, 255, 0.6);
+        }
+        .vip-border .top { top: 0; left: 0; width: 100%; height: 3px; animation: edgeMove 3s linear infinite; }
+        .vip-border .right { top: 0; right: 0; width: 3px; height: 100%; animation: edgeMoveVert 3s linear infinite 0.75s; }
+        .vip-border .bottom { bottom: 0; left: 0; width: 100%; height: 3px; animation: edgeMoveRev 3s linear infinite 1.5s; }
+        .vip-border .left { top: 0; left: 0; width: 3px; height: 100%; animation: edgeMoveVertRev 3s linear infinite 2.25s; }
+        @keyframes edgeMove { 0% { background-position: 0% 0%; } 100% { background-position: 200% 0%; } }
+        @keyframes edgeMoveRev { 0% { background-position: 200% 0%; } 100% { background-position: 0% 0%; } }
+        @keyframes edgeMoveVert { 0% { background-position: 0% 0%; } 100% { background-position: 0% 200%; } }
+        @keyframes edgeMoveVertRev { 0% { background-position: 0% 200%; } 100% { background-position: 0% 0%; } }
+
+        .vip-inner-glow {
+            position: fixed;
+            top: 4px;
+            left: 4px;
+            width: calc(100% - 8px);
+            height: calc(100% - 8px);
+            pointer-events: none;
+            z-index: 9998;
+            border: 1px solid rgba(0, 195, 255, 0.4);
+            box-shadow: inset 0 0 40px rgba(0, 195, 255, 0.2), 0 0 30px rgba(255, 0, 212, 0.2);
+            border-radius: 24px;
+        }
+
+        /* Lưới nền siêu sang */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 195, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 195, 255, 0.08) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* lớp phủ gradient động */
+        .dynamic-glow {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 0, 212, 0.12), transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* SAO NỀN - PHONG CÁCH VŨ TRỤ */
+        .star-vip {
+            position: fixed;
+            background: radial-gradient(circle, #ffffff, #aaf0ff);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            animation: starPulse 2.5s ease-in-out infinite;
+            will-change: opacity, transform;
+        }
+        @keyframes starPulse {
+            0%, 100% { opacity: 0.25; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.25); }
+        }
+
+        /* SAO BĂNG HIỆU ỨNG NHƯNG MƯỢT */
+        .shooting-star-vip {
+            position: fixed;
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(0, 195, 255, 0), #00ffff, #ff00d4, #ffffff);
+            border-radius: 4px;
+            pointer-events: none;
+            z-index: 10000;
+            filter: blur(1px);
+            animation: shootVip 4s ease-out forwards;
+            will-change: transform, opacity;
+        }
+        .shooting-star-vip::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #00ffff, 0 0 20px #ff00d4;
+        }
+        @keyframes shootVip {
+            0% { transform: translate(100vw, -5vh) rotate(35deg); opacity: 0; }
+            10% { opacity: 1; }
+            85% { opacity: 0.9; }
+            100% { transform: translate(-40vw, 120vh) rotate(35deg); opacity: 0; }
+        }
+
+        /* CONTAINER CHÍNH - CARD GLASS VIP */
+        .vip-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+            position: relative;
+            z-index: 20;
+            background: rgba(6, 8, 18, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 48px;
+            border: 1px solid rgba(0, 195, 255, 0.4);
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.8), 0 0 0 1px rgba(0, 195, 255, 0.2) inset;
+            transition: 0.3s;
+        }
+
+        /* AVATAR */
+        .avatar-vip {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff00d4;
+            box-shadow: 0 0 25px #ff00d4, 0 0 12px #00c3ff;
+            transition: 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .avatar-vip:hover {
+            transform: scale(1.04) rotate(2deg);
+            box-shadow: 0 0 45px #00c3ff, 0 0 20px #ff00d4;
+        }
+
+        /* NAME CHUYỂN ĐỘNG */
+        .name-vip {
+            font-size: 3.3rem;
+            font-weight: 800;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, #00c3ff, #ff00d4, #00e0ff, #ff44e6);
+            background-size: 300% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: textFlow 4s linear infinite;
+            letter-spacing: -0.5px;
+        }
+        @keyframes textFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .badge-vip {
+            display: inline-block;
+            background: rgba(0, 195, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid #00c3ff;
+            color: #aaffff;
+            margin-top: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* NÚT MẠNG XÃ HỘI CAO CẤP */
+        .social-luxury {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            margin: 2rem 0 2rem;
+        }
+        .luxury-btn {
+            background: rgba(12, 12, 28, 0.8);
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.2s;
+            border: 1px solid rgba(0, 195, 255, 0.6);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
+        }
+        .luxury-btn img {
+            width: 22px;
+            height: 22px;
+            filter: drop-shadow(0 0 2px cyan);
+        }
+        .luxury-btn:hover {
+            background: #00c3ff;
+            color: #05050F;
+            border-color: #ff00d4;
+            box-shadow: 0 0 20px #00c3ff;
+            transform: translateY(-3px);
+        }
+
+        /* CARD THÔNG TIN - STYLE PRO */
+        .info-card-vip {
+            background: rgba(10, 12, 24, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 36px;
+            padding: 1.6rem 2rem;
+            margin-bottom: 1.8rem;
+            border-left: 8px solid #ff00d4;
+            border-right: 1px solid rgba(0, 195, 255, 0.3);
+            transition: all 0.25s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .info-card-vip:hover {
+            transform: translateX(8px);
+            border-left-width: 12px;
+            border-left-color: #00c3ff;
+            background: rgba(12, 16, 30, 0.85);
+        }
+        .info-card-vip h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(120deg, #00c3ff, #ff88f0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .info-line-vip {
+            padding: 0.7rem 0;
+            border-bottom: 1px dashed rgba(0, 195, 255, 0.3);
+            font-size: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .highlight-vip {
+            color: #ff88f0;
+            font-weight: 700;
+            text-shadow: 0 0 6px #ff00d4;
+            background: rgba(255, 0, 212, 0.15);
+            padding: 2px 8px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+        }
+        .chip-special {
+            background: linear-gradient(95deg, #00c3ff22, #ff00d422);
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #aaffff;
+        }
+
+        .quote-vip {
+            text-align: center;
+            background: rgba(0, 195, 255, 0.08);
+            border-radius: 40px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid #ff00d4aa;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #e0f0ff;
+            box-shadow: 0 0 18px rgba(0, 195, 255, 0.2);
+            backdrop-filter: blur(4px);
+        }
+
+        .footer-vip {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            font-size: 0.8rem;
+            color: #88aaffcc;
+            border-top: 1px solid #00c3ff66;
+        }
+
+        @media (max-width: 680px) {
+            body { padding: 0.8rem; }
+            .vip-container { padding: 1.3rem; }
+            .name-vip { font-size: 2.1rem; }
+            .luxury-btn { padding: 0.5rem 1.2rem; font-size: 0.8rem; }
+            .info-card-vip h3 { font-size: 1.4rem; }
+            .info-line-vip { font-size: 0.85rem; }
+            .avatar-vip { width: 110px; height: 110px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="vip-border">
+        <div class="edge top"></div>
+        <div class="edge right"></div>
+        <div class="edge bottom"></div>
+        <div class="edge left"></div>
+    </div>
+    <div class="vip-inner-glow"></div>
+    <div class="cyber-grid"></div>
+    <div class="dynamic-glow"></div>
+
+    <div class="vip-container">
+        <!-- AVATAR + TÊN + TAG VIP -->
+        <div style="text-align: center;">
+            <img class="avatar-vip" src="https://i.postimg.cc/yxdM1DVK/4634092F-A263-4E0B-BEFB-EEAED2571632.png" alt="Viet Anh Avatar" onerror="this.src='https://placehold.co/400x400?text=VIP+ANH'">
+            <h1 class="name-vip">VIET ANH STORE</h1>
+            <div class="badge-vip">✦ ĐỒ CHƠI FULL ĐỎ | VIP LEGEND ✦</div>
+        </div>
+
+        <!-- NÚT KẾT NỐI SIÊU ĐẲNG CẤP: ZALO - FACEBOOK - TIKTOK -->
+        <div class="social-luxury">
+            <a href="https://zalo.me/0933121845" target="_blank" class="luxury-btn">
+                <img src="https://cdn.simpleicons.org/zalo/00e5ff" width="22" height="22" alt="zalo"> ZALO
+            </a>
+            <a href="https://www.facebook.com/share/1CUuP3Dw4s/?mibextid=wwXIfr" target="_blank" class="luxury-btn">
+                <img src="https://cdn.simpleicons.org/facebook/ff44cc" width="22" height="22" alt="fb"> FACEBOOK
+            </a>
+            <a href="https://www.tiktok.com/@vietanh.loveyou?_r=1&_t=ZS-94WFoDQrElY" target="_blank" class="luxury-btn">
+                <img src="https://cdn.simpleicons.org/tiktok/ff44cc" width="22" height="22"> TIKTOK
+            </a>
+        </div>
+
+        <!-- QUOTE Ấn tượng -->
+        <div class="quote-vip">
+            ⚡KÉO TÂM FULL ĐỎ • UY TÍN XỨNG TẦM VIP ⚡
+        </div>
+
+        <!-- CARD PROFILE -->
+        <div class="info-card-vip">
+            <h3>👑 PROFILE VIP</h3>
+            <div class="info-line-vip"><span class="highlight-vip">ADMIN</span> : TRƯƠNG VIỆT ANH 🔥</div>
+            <div class="info-line-vip"><span class="highlight-vip">📱 ZALO</span> : 0933121845 <span class="chip-special">(24/7)</span></div>
+            <div class="info-line-vip"><span class="highlight-vip">📘 FACEBOOK</span> : 𝙑𝙞𝙚𝙩 𝘼𝙣𝙝</div>
+            <div class="info-line-vip"><span class="highlight-vip">🎯 SERVICE</span> : REG - FILE - AIM CAO CẤP</div>
+            <div class="info-line-vip"><span class="highlight-vip">📱 DEVICE</span> : ANDROID / IOS / PC</div>
+            <div class="info-line-vip"><span class="highlight-vip">💎 SPECIAL</span> : Đồ chơi kéo tâm Full đỏ | Hack FreeFire uy tín</div>
+            <div class="info-line-vip"><span class="highlight-vip">🚀 MOTO</span> : Online 24/7 - Rep nhanh như chớp - Chất làm nên thương hiệu</div>
+        </div>
+
+        <!-- CARD MISSION / DỊCH VỤ -->
+        <div class="info-card-vip">
+            <h3>🎯 MISSION • XỨNG TẦM</h3>
+            <div class="info-line-vip">✔️ Cung cấp REG, FILE, AIM chất lượng cao, bảo hành tận tâm</div>
+            <div class="info-line-vip">✔️ Hỗ trợ 24/7, xử lý yêu cầu trong 5 phút</div>
+            <div class="info-line-vip">✔️ Đồ chơi kéo tâm Full đỏ - Update liên tục</div>
+            <div class="info-line-vip">✔️ Tương thích mọi thiết bị, hướng dẫn chi tiết</div>
+            <div class="info-line-vip">✔️ Uy tín số 1 cộng đồng - Hoàn tiền nếu không hài lòng</div>
+        </div>
+
+        <!-- CONTACT & LIÊN HỆ TRỰC TIẾP -->
+        <div class="info-card-vip">
+            <h3>📲 KẾT NỐI NGAY</h3>
+            <div class="info-line-vip">💬 ZALO : <span class="highlight-vip">0933121845</span> (Bấm link Zalo bên trên)</div>
+            <div class="info-line-vip">🌐 FACEBOOK : <span class="highlight-vip">Trương Việt Anh</span></div>
+            <div class="info-line-vip">🎵 TIKTOK : <span class="highlight-vip">@vietanh.loveyou</span></div>
+            <div class="info-line-vip">✉️ Gmail hỗ trợ : <span class="highlight-vip">anhv75217@gmai.com</span></div>
+        </div>
+
+        <div class="footer-vip">
+            © 2026 TRUONG VIET ANH | MILKYWAY NEON EMPIRE<br>
+            <span style="color:#ff44cc;">✦ ĐẲNG CẤP KHÔNG LỜI • CHẤT LƯỢNG LÀM NÊN TÊN TUỔI ✦</span>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // HỆ THỐNG SAO NỀN SIÊU SANG (800 NGÔI SAO NHƯNG TỐI ƯU)
+            function createGalaxyStars() {
+                const starCount = 800;
+                const fragment = document.createDocumentFragment();
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star-vip');
+                    const size = Math.random() * 3 + 0.8;
+                    star.style.width = size + 'px';
+                    star.style.height = size + 'px';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.animationDelay = Math.random() * 5 + 's';
+                    star.style.animationDuration = Math.random() * 4 + 1.8 + 's';
+                    const r = Math.random();
+                    if (r > 0.85) star.style.background = 'radial-gradient(circle, #ff88ff, #ff00d4)';
+                    else if (r > 0.7) star.style.background = 'radial-gradient(circle, #00e0ff, #0088ff)';
+                    else star.style.background = 'radial-gradient(circle, #ffffff, #cceeff)';
+                    fragment.appendChild(star);
+                }
+                document.body.appendChild(fragment);
+            }
+
+            function createShootingStarVIP() {
+                const star = document.createElement('div');
+                star.classList.add('shooting-star-vip');
+                const startX = Math.random() * 70 + 15;
+                const duration = Math.random() * 2.8 + 2.2;
+                star.style.left = startX + '%';
+                star.style.top = '-5%';
+                star.style.animationDuration = duration + 's';
+                star.style.animationDelay = '0s';
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), (duration + 1) * 1000);
+            }
+
+            createGalaxyStars();
+
+            // sao băng thưa hơn nhưng vẫn đủ bay bổng: 3.2 giây 1 lần
+            setInterval(() => {
+                createShootingStarVIP();
+            }, 3200);
+            
+            // tạo 6 sao băng đầu tiên
+            for (let i = 0; i < 6; i++) {
+                setTimeout(() => createShootingStarVIP(), i * 500);
+            }
+
+            // Thêm hiệu ứng chuyển động cho grid nền (tinh tế)
+            const grid = document.querySelector('.cyber-grid');
+            if (grid) {
+                let offset = 0;
+                setInterval(() => {
+                    offset = (offset + 1) % 100;
+                    grid.style.backgroundPosition = `${offset}px ${offset}px`;
+                }, 120);
+            }
+
+            // log hoành tráng
+            console.log('%c🔥 VIP PRO MAX 🔥 | VIET ANH | LINK IN BIO ĐẲNG CẤP VŨ TRỤ', 'color: #ff00d4; font-size: 16px; font-weight: bold;');
+        })();
+    </script>
+</body>
+</html>

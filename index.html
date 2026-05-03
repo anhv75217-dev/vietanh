@@ -1,583 +1,467 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-  <title>𝐏𝐀𝐍𝐄𝐋 𝐈𝐎𝐒</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>VIP | Việt Anh • NEON EMPIRE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+        body {
+            background: #05050F;
+            font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+            color: #fff;
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding: 1.5rem;
+        }
 
-  <link rel="stylesheet" href="styles.css" />
+        /* Import font đẹp */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+        /* === VIỀN CHẠY NHẤP NHÁY CAO CẤP === */
+        .vip-border {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .vip-border .edge {
+            position: absolute;
+            background: linear-gradient(90deg, #00c3ff, #ff00d4, #00e0ff, #ff00d4);
+            background-size: 300% 100%;
+            will-change: background-position;
+            box-shadow: 0 0 8px rgba(0, 195, 255, 0.6);
+        }
+        .vip-border .top { top: 0; left: 0; width: 100%; height: 3px; animation: edgeMove 3s linear infinite; }
+        .vip-border .right { top: 0; right: 0; width: 3px; height: 100%; animation: edgeMoveVert 3s linear infinite 0.75s; }
+        .vip-border .bottom { bottom: 0; left: 0; width: 100%; height: 3px; animation: edgeMoveRev 3s linear infinite 1.5s; }
+        .vip-border .left { top: 0; left: 0; width: 3px; height: 100%; animation: edgeMoveVertRev 3s linear infinite 2.25s; }
+        @keyframes edgeMove { 0% { background-position: 0% 0%; } 100% { background-position: 200% 0%; } }
+        @keyframes edgeMoveRev { 0% { background-position: 200% 0%; } 100% { background-position: 0% 0%; } }
+        @keyframes edgeMoveVert { 0% { background-position: 0% 0%; } 100% { background-position: 0% 200%; } }
+        @keyframes edgeMoveVertRev { 0% { background-position: 0% 200%; } 100% { background-position: 0% 0%; } }
+
+        .vip-inner-glow {
+            position: fixed;
+            top: 4px;
+            left: 4px;
+            width: calc(100% - 8px);
+            height: calc(100% - 8px);
+            pointer-events: none;
+            z-index: 9998;
+            border: 1px solid rgba(0, 195, 255, 0.4);
+            box-shadow: inset 0 0 40px rgba(0, 195, 255, 0.2), 0 0 30px rgba(255, 0, 212, 0.2);
+            border-radius: 24px;
+        }
+
+        /* Lưới nền siêu sang */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 195, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 195, 255, 0.08) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* lớp phủ gradient động */
+        .dynamic-glow {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 0, 212, 0.12), transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* SAO NỀN - PHONG CÁCH VŨ TRỤ */
+        .star-vip {
+            position: fixed;
+            background: radial-gradient(circle, #ffffff, #aaf0ff);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            animation: starPulse 2.5s ease-in-out infinite;
+            will-change: opacity, transform;
+        }
+        @keyframes starPulse {
+            0%, 100% { opacity: 0.25; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.25); }
+        }
+
+        /* SAO BĂNG HIỆU ỨNG NHƯNG MƯỢT */
+        .shooting-star-vip {
+            position: fixed;
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(0, 195, 255, 0), #00ffff, #ff00d4, #ffffff);
+            border-radius: 4px;
+            pointer-events: none;
+            z-index: 10000;
+            filter: blur(1px);
+            animation: shootVip 4s ease-out forwards;
+            will-change: transform, opacity;
+        }
+        .shooting-star-vip::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #00ffff, 0 0 20px #ff00d4;
+        }
+        @keyframes shootVip {
+            0% { transform: translate(100vw, -5vh) rotate(35deg); opacity: 0; }
+            10% { opacity: 1; }
+            85% { opacity: 0.9; }
+            100% { transform: translate(-40vw, 120vh) rotate(35deg); opacity: 0; }
+        }
+
+        /* CONTAINER CHÍNH - CARD GLASS VIP */
+        .vip-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+            position: relative;
+            z-index: 20;
+            background: rgba(6, 8, 18, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 48px;
+            border: 1px solid rgba(0, 195, 255, 0.4);
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.8), 0 0 0 1px rgba(0, 195, 255, 0.2) inset;
+            transition: 0.3s;
+        }
+
+        /* AVATAR */
+        .avatar-vip {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff00d4;
+            box-shadow: 0 0 25px #ff00d4, 0 0 12px #00c3ff;
+            transition: 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .avatar-vip:hover {
+            transform: scale(1.04) rotate(2deg);
+            box-shadow: 0 0 45px #00c3ff, 0 0 20px #ff00d4;
+        }
+
+        /* NAME CHUYỂN ĐỘNG */
+        .name-vip {
+            font-size: 3.3rem;
+            font-weight: 800;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, #00c3ff, #ff00d4, #00e0ff, #ff44e6);
+            background-size: 300% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: textFlow 4s linear infinite;
+            letter-spacing: -0.5px;
+        }
+        @keyframes textFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .badge-vip {
+            display: inline-block;
+            background: rgba(0, 195, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid #00c3ff;
+            color: #aaffff;
+            margin-top: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* NÚT MẠNG XÃ HỘI CAO CẤP */
+        .social-luxury {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            margin: 2rem 0 2rem;
+        }
+        .luxury-btn {
+            background: rgba(12, 12, 28, 0.8);
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.2s;
+            border: 1px solid rgba(0, 195, 255, 0.6);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
+        }
+        .luxury-btn img {
+            width: 22px;
+            height: 22px;
+            filter: drop-shadow(0 0 2px cyan);
+        }
+        .luxury-btn:hover {
+            background: #00c3ff;
+            color: #05050F;
+            border-color: #ff00d4;
+            box-shadow: 0 0 20px #00c3ff;
+            transform: translateY(-3px);
+        }
+
+        /* CARD THÔNG TIN - STYLE PRO */
+        .info-card-vip {
+            background: rgba(10, 12, 24, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 36px;
+            padding: 1.6rem 2rem;
+            margin-bottom: 1.8rem;
+            border-left: 8px solid #ff00d4;
+            border-right: 1px solid rgba(0, 195, 255, 0.3);
+            transition: all 0.25s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .info-card-vip:hover {
+            transform: translateX(8px);
+            border-left-width: 12px;
+            border-left-color: #00c3ff;
+            background: rgba(12, 16, 30, 0.85);
+        }
+        .info-card-vip h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(120deg, #00c3ff, #ff88f0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .info-line-vip {
+            padding: 0.7rem 0;
+            border-bottom: 1px dashed rgba(0, 195, 255, 0.3);
+            font-size: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .highlight-vip {
+            color: #ff88f0;
+            font-weight: 700;
+            text-shadow: 0 0 6px #ff00d4;
+            background: rgba(255, 0, 212, 0.15);
+            padding: 2px 8px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+        }
+        .chip-special {
+            background: linear-gradient(95deg, #00c3ff22, #ff00d422);
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #aaffff;
+        }
+
+        .quote-vip {
+            text-align: center;
+            background: rgba(0, 195, 255, 0.08);
+            border-radius: 40px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid #ff00d4aa;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #e0f0ff;
+            box-shadow: 0 0 18px rgba(0, 195, 255, 0.2);
+            backdrop-filter: blur(4px);
+        }
+
+        .footer-vip {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            font-size: 0.8rem;
+            color: #88aaffcc;
+            border-top: 1px solid #00c3ff66;
+        }
+
+        @media (max-width: 680px) {
+            body { padding: 0.8rem; }
+            .vip-container { padding: 1.3rem; }
+            .name-vip { font-size: 2.1rem; }
+            .luxury-btn { padding: 0.5rem 1.2rem; font-size: 0.8rem; }
+            .info-card-vip h3 { font-size: 1.4rem; }
+            .info-line-vip { font-size: 0.85rem; }
+            .avatar-vip { width: 110px; height: 110px; }
+        }
+    </style>
 </head>
 <body>
-<div id="home-intro" class="home-intro">
-  <div class="intro-title">𝐏𝐀𝐍𝐄𝐋 𝐈𝐎𝐒</div>
-  <div class="intro-main">
-    <div class="intro-menu">
-      <span class="active">𝐒𝐔𝐏𝐏𝐎𝐑𝐓 𝐏𝐀𝐍𝐄𝐋 𝐕𝐍</span>
+
+    <div class="vip-border">
+        <div class="edge top"></div>
+        <div class="edge right"></div>
+        <div class="edge bottom"></div>
+        <div class="edge left"></div>
+    </div>
+    <div class="vip-inner-glow"></div>
+    <div class="cyber-grid"></div>
+    <div class="dynamic-glow"></div>
+
+    <div class="vip-container">
+        <!-- AVATAR + TÊN + TAG VIP -->
+        <div style="text-align: center;">
+            <img class="avatar-vip" src="https://i.postimg.cc/yxdM1DVK/4634092F-A263-4E0B-BEFB-EEAED2571632.png" alt="Viet Anh Avatar" onerror="this.src='https://placehold.co/400x400?text=VIP+ANH'">
+            <h1 class="name-vip">VIET ANH STORE</h1>
+            <div class="badge-vip">✦ ĐỒ CHƠI FULL ĐỎ | VIP LEGEND ✦</div>
+        </div>
+
+        <!-- NÚT KẾT NỐI SIÊU ĐẲNG CẤP: ZALO - FACEBOOK - TIKTOK -->
+        <div class="social-luxury">
+            <a href="https://zalo.me/0933121845" target="_blank" class="luxury-btn">
+                <img src="https://cdn.simpleicons.org/zalo/00e5ff" width="22" height="22" alt="zalo"> ZALO
+            </a>
+            <a href="https://www.facebook.com/share/1CUuP3Dw4s/?mibextid=wwXIfr" target="_blank" class="luxury-btn">
+                <img src="https://cdn.simpleicons.org/facebook/ff44cc" width="22" height="22" alt="fb"> FACEBOOK
+            </a>
+            <a href="https://www.tiktok.com/@vietanh.loveyou?_r=1&_t=ZS-94WFoDQrElY" target="_blank" class="luxury-btn">
+                <img src="https://cdn.simpleicons.org/tiktok/ff44cc" width="22" height="22"> TIKTOK
+            </a>
+        </div>
+
+        <!-- QUOTE Ấn tượng -->
+        <div class="quote-vip">
+            ⚡KÉO TÂM FULL ĐỎ • UY TÍN XỨNG TẦM VIP ⚡
+        </div>
+
+        <!-- CARD PROFILE -->
+        <div class="info-card-vip">
+            <h3>👑 PROFILE VIP</h3>
+            <div class="info-line-vip"><span class="highlight-vip">ADMIN</span> : TRƯƠNG VIỆT ANH 🔥</div>
+            <div class="info-line-vip"><span class="highlight-vip">📱 ZALO</span> : 0933121845 <span class="chip-special">(24/7)</span></div>
+            <div class="info-line-vip"><span class="highlight-vip">📘 FACEBOOK</span> : 𝙑𝙞𝙚𝙩 𝘼𝙣𝙝</div>
+            <div class="info-line-vip"><span class="highlight-vip">🎯 SERVICE</span> : REG - FILE - AIM CAO CẤP</div>
+            <div class="info-line-vip"><span class="highlight-vip">📱 DEVICE</span> : ANDROID / IOS / PC</div>
+            <div class="info-line-vip"><span class="highlight-vip">💎 SPECIAL</span> : Đồ chơi kéo tâm Full đỏ | Hack FreeFire uy tín</div>
+            <div class="info-line-vip"><span class="highlight-vip">🚀 MOTO</span> : Online 24/7 - Rep nhanh như chớp - Chất làm nên thương hiệu</div>
+        </div>
+
+        <!-- CARD MISSION / DỊCH VỤ -->
+        <div class="info-card-vip">
+            <h3>🎯 MISSION • XỨNG TẦM</h3>
+            <div class="info-line-vip">✔️ Cung cấp REG, FILE, AIM chất lượng cao, bảo hành tận tâm</div>
+            <div class="info-line-vip">✔️ Hỗ trợ 24/7, xử lý yêu cầu trong 5 phút</div>
+            <div class="info-line-vip">✔️ Đồ chơi kéo tâm Full đỏ - Update liên tục</div>
+            <div class="info-line-vip">✔️ Tương thích mọi thiết bị, hướng dẫn chi tiết</div>
+            <div class="info-line-vip">✔️ Uy tín số 1 cộng đồng - Hoàn tiền nếu không hài lòng</div>
+        </div>
+
+        <!-- CONTACT & LIÊN HỆ TRỰC TIẾP -->
+        <div class="info-card-vip">
+            <h3>📲 KẾT NỐI NGAY</h3>
+            <div class="info-line-vip">💬 ZALO : <span class="highlight-vip">0933121845</span> (Bấm link Zalo bên trên)</div>
+            <div class="info-line-vip">🌐 FACEBOOK : <span class="highlight-vip">Trương Việt Anh</span></div>
+            <div class="info-line-vip">🎵 TIKTOK : <span class="highlight-vip">@vietanh.loveyou</span></div>
+            <div class="info-line-vip">✉️ Gmail hỗ trợ : <span class="highlight-vip">anhv75217@gmai.com</span></div>
+        </div>
+
+        <div class="footer-vip">
+            © 2026 TRUONG VIET ANH | MILKYWAY NEON EMPIRE<br>
+            <span style="color:#ff44cc;">✦ ĐẲNG CẤP KHÔNG LỜI • CHẤT LƯỢNG LÀM NÊN TÊN TUỔI ✦</span>
+        </div>
     </div>
 
-    <h3 class="intro-welcome">CHÀO MỪNG BẠN ĐẾN VỚI PANEL IOS<br>
-    </h3>
-
-    <p class="intro-desc">App Panel IOS Trợ Năng Độc Quyền Bởi Developer : Anh Tú Quản Lí<br>[ ⚠️ LƯU Ý ]<br> Không Phải Phần Miềm Thứ 3<br>An Toàn - Chất Lượng - Hiệu Quả<br>Phù Hợp Cho Mọi Thiết Bị iPhone Của Bạn 
-    </p>
-   <div class="admin-card">
-  <img src="https://m.media-amazon.com/images/M/MV5BMTI3MTE3ZGQtNWJmMi00MTAzLWI2MzYtZTFiMDRkMzU0ZjE0XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" class="admin-photo" alt="DEV Anh Tu CODER">
-
-  <h4>DEV Anh Tu CODER</h4>
-  <p>Developer / Admin PANEL IOS</p>
-
-  <div class="admin-links">
-    <a href="https://www.facebook.com/share/18hQvJY31n/?mibextid=wwXIfr"target="_blank">Facebook</a>
-    <a href="https://zalo.me/0866388272" target="_blank">Zalo</a>
-  </div>
-</div>
-    <button class="dev-btn" onclick="enterPanel()">
-START PANEL IOS APP
-</button>
-
-  </div>
-
-  <div class="home-footer"></div>
-</div>
-  <canvas id="particles-canvas"></canvas>
-
-  <div class="container">
-    <header class="header">
-  <div class="app-title">
-    <span class="app-sub">GAME OPTIMIZER</span>
-    <span class="app-main">𝐏𝐀𝐍𝐄𝐋 𝐈𝐎𝐒</span>
-    <span class="app-game">FREE FIRE</span>
-  </div>
-</header>
-      </h1>
-      </button>
-    </header>
-
-    <div id="announce-bar" class="announce hidden">
-      <div class="announce-content">
-        <i class="fas fa-bullhorn"></i>
-        <span class="announce-title">ĐÃ NÂNG CẤP DRAG SENSI → 𝐏𝐀𝐍𝐄𝐋 𝐈𝐎𝐒 </span>
-        <div class="announce-tags">
-          <span class="tag"><i class="fas fa-hand-sparkles"></i>LUX Touch+</span>
-          <span class="tag"><i class="fas fa-arrows-rotate"></i>DPI động</span>
-          <span class="tag"><i class="fas fa-floppy-disk"></i>Tự lưu cấu hình</span>
-          <span class="tag"><i class="fas fa-rocket"></i>Chế độ Pro</span>
-          <span class="tag"><i class="fas fa-shield-halved"></i>Bộ lọc rung</span>
-        </div>
-      </div>
-      <button class="announce-close" id="announce-close" aria-label="Đóng">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <main class="main-content">
-<section class="section">
-        <h2 class="section-title vip-title">
-  <i class="fas fa-crown vip-icon"></i> MOD PREMIUM VIP
-</h2>
-        <div class="function-item">
-          <div class="function-content">
-            <div class="function-text-wrap">
-  <span class="function-text">AIMLOCK</span>
-  <div class="function-desc">
-  <span class="check"></span>
-  <span class="desc-text">Khóa Tâm Bám Đầu</span>
-             </div>
-               </div>
-                 </span>
-                    </div>
-          <div class="toggle-switch" data-function="config">
-            <input type="checkbox" id="config-toggle" class="toggle-input" />
-            <label for="config-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
-          </div>
-        </div>
-<div class="function-item cn-master">
-  <div class="function-content">
-    <div class="function-text-wrap">
-  <span class="function-text">SENSIVITY BOOSTER</span>
-  <div class="function-desc">
-  <span class="check"></span>
-  <span class="desc-text">Nhạy Màn</span>
-             </div>
-               </div>
-                 </span>
-                    </div>
-  <div class="toggle-switch">
-    <input type="checkbox" id="cn-master-toggle" class="toggle-input">
-    <label for="cn-master-toggle" class="toggle-label">
-      <span class="toggle-slider"></span>
-    </label>
-  </div>
-</div>
-<div class="function-item">
-  <div class="function-content">
-    <div class="function-text-wrap">
-  <span class="function-text">SCREEN BOOSTER</span>
-  <div class="function-desc">
-  <span class="check"></span>
-  <span class="desc-text">Buff FPS</span>
-             </div>
-               </div>
-                 </span>
-                    </div>
-  <div class="toggle-switch">
-    <input type="checkbox" id="anti-rung-pro" class="toggle-input">
-    <label for="anti-rung-pro" class="toggle-label">
-      <span class="toggle-slider"></span>
-    </label>
-  </div>
-</div>
-<div class="function-item">
-  <div class="function-content">
-    <div class="function-text-wrap">
-  <span class="function-text">ANCHOR AIM</span>
-  <div class="function-desc">
-  <span class="check"></span>
-  <span class="desc-text">Ghìm Tâm</span>
-             </div>
-               </div>
-                 </span>
-                    </div>
-  <div class="toggle-switch">
-    <input type="checkbox" id="aim-assist-plus" class="toggle-input">
-    <label for="aim-assist-plus" class="toggle-label">
-      <span class="toggle-slider"></span>
-    </label>
-  </div>
-</div>
-
-
-        <div class="function-item">
-          <div class="function-content">
-            <div class="function-text-wrap">
-  <span class="function-text">FEATHER AIM</span>
-  <div class="function-desc">
-  <span class="check"></span>
-  <span class="desc-text">Nhẹ Tâm</span>
-             </div>
-               </div>
-                 </span>
-                    </div>
-          <div class="toggle-switch" data-function="lux">
-            <input type="checkbox" id="lux-toggle" class="toggle-input" />
-            <label for="lux-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
-          </div>
-        </div>
-
-        <div class="function-item">
-          <div class="function-content">
-            <div class="function-text-wrap">
-  <span class="function-text">HEADSHOT FIX</span>
-  <div class="function-desc">
-  <span class="check"></span>
-  <span class="desc-text">Fix Lố</span>
-             </div>
-               </div>
-                 </span>
-                    </div>
-          <div class="toggle-switch" data-function="fix-rung">
-            <input type="checkbox" id="fix-rung-toggle" class="toggle-input" />
-            <label for="fix-rung-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
-          </div>
-</div>
-
-        <div class="function-item">
-          <div class="function-content">
-            <div class="function-text-wrap">
-  <span class="function-text">SHAKE FIX</span>
-  <div class="function-desc">
-  <span class="check"></span>
-  <span class="desc-text">Fix Rung</span>
-             </div>
-               </div>
-                 </span>
-                    </div>
-          <div class="toggle-switch" data-function="nhe-tam">
-            <input type="checkbox" id="nhe-tam-toggle" class="toggle-input" />
-            <label for="nhe-tam-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
-          </div>
-        </div>
-        <div class="function-item">
-          <div class="function-content">
-            <div class="function-text-wrap">
-  <span class="function-text">DRIFT FIX</span>
-  <div class="function-desc">
-  <span class="check"></span>
-  <span class="desc-text">Fix Lạc Đạn</span>
-             </div>
-               </div>
-                 </span>
-                    </div>
-          <div class="toggle-switch" data-function="lock-dau">
-            <input type="checkbox" id="lock-dau-toggle" class="toggle-input" />
-            <label for="lock-dau-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
-          </div>
-        </div>
-      </section>
-</button>
-<section class="section">
-        
- <div class="sensi-item">
-          <div class="sensi-content">
-            <div class="sensi-icon">
-  <i class="fas fa-mobile-screen-button"></i>
-</div>
-       
-            <div class="sensi-info"><span class="sensi-label">DEVICE:</span><span class="sensi-value">IPHONE</span></div>
-          </div>
-        </div>
-
-        <div class="sensi-item">
-          <div class="sensi-content">
-            <div class="sensi-icon">
-  <i class="fas fa-sliders"></i>
-</div>
-            <div class="sensi-info">
-              <span class="sensi-label">CHẾ ĐỘ PANEL : </span>
-
-              <div class="dropdown">
-                <select id="mode-select" class="dropdown-select">
-                  <option value="muot-ma">Mượt Mà</option>
-                  <option value="cao-cap">Cao Cấp</option>
-                  <option value="tieu-chuan">Tiêu Chuẩn</option>
-                </select>
-                <i class="fas fa-chevron-down dropdown-arrow"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="sensi-item">
-          <div class="sensi-content">
-            <div class="sensi-icon">
-  <i class="fas fa-bullseye"></i>
-</div>
-            <div class="sensi-info">
-              <span class="sensi-label">DPI PANEL IOS :</span>
-              <div class="dropdown">
-                <select id="dpi-select" class="dropdown-select">
-                  <option value="1.0">1.0x</option>
-                  <option value="1.5">1.5x</option>
-                  <option value="2.0">2.0x</option>
-                  <option value="2.5">2.5x</option>
-                  <option value="3.0">3.0x</option>
-                </select>
-                <i class="fas fa-chevron-down dropdown-arrow"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="section" id="extra-section">
-        <h2 class="section-title game-title">
-  RAM / CPU MONITOR
-</h2>
-        <div class="console-mobile">
-          <div class="cm-grid">
-            <div class="cm-panel cm-panel-charts">
-              <h4>Realtime charts</h4>
-              <div class="cm-charts">
-                <div class="cm-chart-box">
-                  <div class="cm-chart-header">
-                    <div class="cm-label">CPU Load <span id="cm-cpu-text">--%</span></div>
-                    <div class="cm-pill"><span>Estimate</span><b id="cm-cpu-est">Frame time</b></div>
-                  </div>
-                  <canvas id="cm-cpu-canvas" width="900" height="240"></canvas>
-                </div>
-
-                <div class="cm-chart-box">
-                  <div class="cm-chart-header">
-                    <div class="cm-label">RAM Usage <span id="cm-ram-text">--</span></div>
-                    <div class="cm-pill"><span>Source</span><b id="cm-ram-src">Auto</b></div>
-                  </div>
-                  <canvas id="cm-ram-canvas" width="900" height="240"></canvas>
-                  <div class="cm-stats">
-                    <div class="cm-stat">
-                      <div class="cm-k">JS Heap Used</div>
-                      <div class="cm-v" id="cm-heap-used">--</div>
-                    </div>
-                    <div class="cm-stat">
-                      <div class="cm-k">JS Heap Limit</div>
-                      <div class="cm-v" id="cm-heap-limit">--</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="cm-topbar">
-              <div class="cm-title">
-                <h3></h3>
-              </div>
-              <div class="cm-controls">
-                <button id="cm-btn-ram" class="cm-btn cm-btn-primary">Dọn RAM</button>
-                <button id="cm-btn-cpu" class="cm-btn cm-btn-primary">Dọn CPU</button>
-                <button id="cm-btn-fps" class="cm-btn cm-btn-danger">Lock FPS: OFF</button>
-                <div class="cm-pill">
-                  <span>FPS</span><b id="cm-fps-now">--</b>
-                  <span>• Mode</span><b id="cm-mode-now">Unlocked</b>
-                </div>
-              </div>
-            </div>
-
-            <div class="cm-panel cm-panel-console console-pro">
-  <div class="console-header">
-    <span class="console-dot live"></span>
-    <span class="console-title-pro">SYSTEM CONSOLE</span>
-    <span class="console-status">LIVE</span>
-  </div>
-
-  <div id="cm-console" class="cm-console pro"></div>
-</div>
-      </section>
-<div class="booster-title">
-  <span></span>
-  BOOSTER
-  <span></span>
-</div>
-  <div class="booster-card">
-    <div class="booster-left">
-      <img src="https://play-lh.googleusercontent.com/Tzh1vMigK1Cn7_KIaMvKBVQRQapIMWMMqqyA6UqJTAYRpino4vvX6ZvYcVjZ_D8g19-DfHKCVeO2QPWl8vHGzw=w240-h480-rw" class="booster-icon">
-      <span>FREE FIRE</span>
-    </div>
-    <button class="booster-btn" onclick="openFreeFire()">
-  BOOSTER
-</button>
-  </div>
-
-  <div class="booster-card">
-    <div class="booster-left">
-      <img src="https://play-lh.googleusercontent.com/EJ83sg58Oo2gAjMHFxFVLM6Z53kuH4_R0M7Yq7gts5fWSIlFchUlmskG1vJKMoncmfOxBXcgJyIaO-nak6sO-MM=s150"" class="booster-icon">
-      <span>FREE FIRE MAX</span>
-    </div>
-    <button class="booster-btn" onclick="openFreeFireMax()">
-  BOOSTER
-</button>
-  </div>
-
-  <div id="booster-status" class="booster-status hidden">
-    Launching game...
-  </div>
-</section>
-<div class="footer">
-  © 2026 BẢN QUYỀN DEV Anh Tú CODER
-</div>
-    </main>
-  <script src="panel-actions.js"></script>
-  <script src="codecs.js"></script>
-  <script src="codecss.js"></script>
-  <script src="codecn.js"></script>
-    <script src="codecn1.js"></script>
-    <script src="codecn2.js"></script>
-    <script src="codecn3.js"></script>
-    <script src="codecn4.js"></script>
-    <script src="codecn5.js"></script>
-    <script src="codecn6.js"></script>
-    <script src="codecn7.js"></script>
-    <script src="codecn8.js"></script>
-    <script src="codecn9.js"></script>
-    <script src="codecn10.js"></script>
-    <script src="codecn11.js"></script>
-    <script src="codecn12.js"></script>
-    <script src="codecn13.js"></script>
-    <script src="codecn14.js"></script>
-    <script src="codecn15.js"></script>
-    <script src="codecn16.js"></script>
-    <script src="codecn17.js"></script>
-    <script src="codecn18.js"></script>
-    <script src="codecn19.js"></script>
-    <script src="codecn20.js"></script>
-    <script src="codecn21.js"></script>
-    <script src="codecn22.js"></script>
-    <script src="codecn23.js"></script>
-    <script src="codecn24.js"></script>
-    <script src="codecn25.js"></script>
-    <script src="codecn26.js"></script>
-    <script src="codecn27.js"></script>
-    <script src="codecn28.js"></script>
-    <script src="codecn29.js"></script>
-    <script src="codecn30.js"></script>
-    <script src="codecn31.js"></script>
-    <script src="codecn32.js"></script>
-    <script src="codecn33.js"></script>
-    <script src="codecn34.js"></script>
-    <script src="codecn35.js"></script>
-    <script src="codecn36.js"></script>
-    <script src="codecn37.js"></script>
-    <script src="codecn38.js"></script>
-    <script src="codecn39.js"></script>
-    <script src="codecn40.js"></script>
-    <script src="codecn41.js"></script>
-    <script src="codecn42.js"></script>
-    <script src="codecn43.js"></script>
-    <script src="codecn44.js"></script>
-    <script src="codecn45.js"></script>
-    <script src="codecn46.js"></script>
-    <script src="codecn47.js"></script>
-    <script src="codecn48.js"></script>
-    <script src="codecn49.js"></script>
-    <script src="codecn50.js"></script>
-  <script src="app.js"></script>
-  <script src="feature-hooks.js"></script>
-<script src="features.js"></script>
-  <script src="key.js"></script>
-<script>
-      (() => {
-        const payload =
-          "KCgpID0+IHsKICBjb25zdCBpc0Jsb2NrZWRDb21ibyA9IChldmVudCkgPT4gewogICAgY29uc3Qga2V5ID0gKGV2ZW50LmtleSB8fCAiIikudG9VcHBlckNhc2UoKTsKICAgIGlmIChrZXkgPT09ICJGMTIiKSByZXR1cm4gdHJ1ZTsKICAgIGlmIChldmVudC5jdHJsS2V5ICYmIGV2ZW50LnNoaWZ0S2V5ICYmIFsiSSIsICJKIiwgIkMiXS5pbmNsdWRlcyhrZXkpKSByZXR1cm4gdHJ1ZTsKICAgIGlmIChldmVudC5jdHJsS2V5ICYmICFldmVudC5zaGlmdEtleSAmJiBrZXkgPT09ICJVIikgcmV0dXJuIHRydWU7CiAgICByZXR1cm4gZmFsc2U7CiAgfTsKCiAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoImNvbnRleHRtZW51IiwgKGV2ZW50KSA9PiB7CiAgICBldmVudC5wcmV2ZW50RGVmYXVsdCgpOwogIH0pOwoKICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcigKICAgICJrZXlkb3duIiwKICAgIChldmVudCkgPT4gewogICAgICBpZiAoaXNCbG9ja2VkQ29tYm8oZXZlbnQpKSB7CiAgICAgICAgZXZlbnQucHJldmVudERlZmF1bHQoKTsKICAgICAgICBldmVudC5zdG9wUHJvcGFnYXRpb24oKTsKICAgICAgICByZXR1cm4gZmFsc2U7CiAgICAgIH0KICAgIH0sCiAgICB7IGNhcHR1cmU6IHRydWUgfQogICk7Cn0pKCk7";
-        const decode =
-          typeof atob === "function"
-            ? atob
-            : (str) => Buffer.from(str, "base64").toString("utf8");
-        Function(decode(payload))();
-      })();
-    </script>
     <script>
-      (function () {
-         const blockGesture = (e) => e.preventDefault();
-        ["gesturestart", "gesturechange"].forEach((ev) =>
-          document.addEventListener(ev, blockGesture, { passive: false })
-        );
-         window.addEventListener("wheel", (e) => {
-          if (e.ctrlKey) {
-            e.preventDefault();
-          }
-        }, { passive: false });
-
-        function loadScript(src, onDone) {
-          var s = document.createElement("script");
-          s.src = src;
-          s.async = false;
-          s.onload = function () {
-            if (typeof onDone === "function") onDone();
-          };
-          s.onerror = function () {
-            console.error("Không tải được script:", src);
-            if (typeof onDone === "function") onDone();
-          };
-          document.body.appendChild(s);
-        }
-
-        var loaderSrc = "./code/app-long-protected.js";
-
-        loadScript(loaderSrc, function () {
-          loadScript("./ketgate.js");
-        });
-      })();
-    </script>
-    <script>
-      (function () {
-         var connection =
-          navigator.connection ||
-          navigator.mozConnection ||
-          navigator.webkitConnection ||
-          null;
-
-        var warmStarted = false;
-        var toggleLocks = new Set();
-
-        function warmConnection() {
-          if (warmStarted) return;
-          warmStarted = true;
-           fetch("./code/app-long-protected.js?warm=" + Date.now(), {
-            cache: "no-store",
-            keepalive: true,
-            mode: "no-cors",
-          }).catch(function () {
-            warmStarted = false;
-          });
-        }
-
-        function isHighThroughput() {
-          if (!connection) return true;
-          if (/wifi|ethernet/gi.test(String(connection.type))) return true;
-          if (/5g/gi.test(String(connection.type))) return true;
-          if (connection.effectiveType && /4g|5g/gi.test(connection.effectiveType))
-            return true;
-          return connection.downlink && connection.downlink >= 10;
-        }
-
-        function smoothToggle(btn) {
-          var feature = btn.closest(".toggle-card");
-          var name = feature ? feature.dataset.feature || "unknown" : "unknown";
-          if (toggleLocks.has(name)) return;
-          toggleLocks.add(name);
-           requestAnimationFrame(function () {
-            warmConnection();
-            setTimeout(function () {
-              toggleLocks.delete(name);
-            }, 320);
-          });
-        }
-
-         document.querySelectorAll(".toggle-card .aimlock-switch").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            smoothToggle(btn);
-          });
-        });
-
-        if (connection && typeof connection.addEventListener === "function") {
-          connection.addEventListener("change", function () {
-            if (isHighThroughput()) {
-              warmConnection();
+        (function() {
+            // HỆ THỐNG SAO NỀN SIÊU SANG (800 NGÔI SAO NHƯNG TỐI ƯU)
+            function createGalaxyStars() {
+                const starCount = 800;
+                const fragment = document.createDocumentFragment();
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star-vip');
+                    const size = Math.random() * 3 + 0.8;
+                    star.style.width = size + 'px';
+                    star.style.height = size + 'px';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.animationDelay = Math.random() * 5 + 's';
+                    star.style.animationDuration = Math.random() * 4 + 1.8 + 's';
+                    const r = Math.random();
+                    if (r > 0.85) star.style.background = 'radial-gradient(circle, #ff88ff, #ff00d4)';
+                    else if (r > 0.7) star.style.background = 'radial-gradient(circle, #00e0ff, #0088ff)';
+                    else star.style.background = 'radial-gradient(circle, #ffffff, #cceeff)';
+                    fragment.appendChild(star);
+                }
+                document.body.appendChild(fragment);
             }
-          });
-        } else {
-           warmConnection();
-        }
-      })();
+
+            function createShootingStarVIP() {
+                const star = document.createElement('div');
+                star.classList.add('shooting-star-vip');
+                const startX = Math.random() * 70 + 15;
+                const duration = Math.random() * 2.8 + 2.2;
+                star.style.left = startX + '%';
+                star.style.top = '-5%';
+                star.style.animationDuration = duration + 's';
+                star.style.animationDelay = '0s';
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), (duration + 1) * 1000);
+            }
+
+            createGalaxyStars();
+
+            // sao băng thưa hơn nhưng vẫn đủ bay bổng: 3.2 giây 1 lần
+            setInterval(() => {
+                createShootingStarVIP();
+            }, 3200);
+            
+            // tạo 6 sao băng đầu tiên
+            for (let i = 0; i < 6; i++) {
+                setTimeout(() => createShootingStarVIP(), i * 500);
+            }
+
+            // Thêm hiệu ứng chuyển động cho grid nền (tinh tế)
+            const grid = document.querySelector('.cyber-grid');
+            if (grid) {
+                let offset = 0;
+                setInterval(() => {
+                    offset = (offset + 1) % 100;
+                    grid.style.backgroundPosition = `${offset}px ${offset}px`;
+                }, 120);
+            }
+
+            // log hoành tráng
+            console.log('%c🔥 VIP PRO MAX 🔥 | VIET ANH | LINK IN BIO ĐẲNG CẤP VŨ TRỤ', 'color: #ff00d4; font-size: 16px; font-weight: bold;');
+        })();
     </script>
-<script>
-window.addEventListener("load", () => {
-document.querySelectorAll(".modal, .notice-modal").forEach(el => {
-    el.style.display = "none";
-  });
-});
-function enterPanel() {
-  const intro = document.getElementById("home-intro");
-  const panel = document.getElementById("main-panel");
-  intro.style.opacity = "0";
-  intro.style.transition = "opacity 0.5s ease";
-
-  setTimeout(() => {
-    intro.style.display = "none";
-    panel.style.display = "block";
-    const notice = document.getElementById("site-notice");
-    if (notice) {
-      notice.style.display = "block";
-      notice.classList.remove("hidden");
-    }
-
-  }, 500);
-}
-</script>
-<script>
-function openPanelTech() {
-  const panel = document.getElementById("special-menu");
-  if (panel) {
-    panel.style.display = "block";
-    panel.classList.remove("hidden");
-  }
-}
-
-function closePanelTech() {
-  const panel = document.getElementById("special-menu");
-  if (panel) {
-    panel.style.display = "none";
-  }
-}
-</script>
-<script>
-function toggleGroup() {
-  const box = document.getElementById("groupBox");
-  if (box.style.display === "none" || box.style.display === "") {
-    box.style.display = "block";
-  } else {
-    box.style.display = "none";
-  }
-}
-</script>
 </body>
 </html>
